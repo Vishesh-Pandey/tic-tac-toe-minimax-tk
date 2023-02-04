@@ -7,7 +7,7 @@ root.title("Tic Tac Toe")
 frame1 = Frame(root)
 frame1.pack()
 titleLabel = Label(frame1 , text="Tic Tac Toe" , font=("Arial" , 30) , bg="orange" )
-titleLabel.pack()
+titleLabel.grid(row=0 , column=0)
 
 frame2 = Frame(root)
 frame2.pack()
@@ -20,7 +20,6 @@ turn = "x"
 
 
 def checkForWin(player):
-
     # rows
     if board[1] == board[2] and board[2] == board[3] and board[3] == player:
         return True
@@ -51,6 +50,12 @@ def checkForWin(player):
 
     return False
 
+def checkForDraw():
+    for i in board.keys():
+        if board[i] == " ":
+            return False
+    
+    return True
 
 # Function to play
 def play(event):
@@ -58,7 +63,6 @@ def play(event):
     button = event.widget
     buttonText = str(button)
     clicked = buttonText[-1]
-    print(clicked)
     if clicked == "n" :
         clicked = 1
     else :
@@ -69,17 +73,22 @@ def play(event):
             button["text"] = "X"
             board[clicked] = turn
             if checkForWin(turn):
-                winningLabel = Label(frame2 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 25))
-                winningLabel.grid(row = 3 , column=0 , columnspan=3)
+                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30))
+                winningLabel.grid(row = 0 , column=0 , columnspan=3)
             turn = "o"
             
         else:
             button["text"] = "O"
             board[clicked] = turn
             if checkForWin(turn):
-                winningLabel = Label(frame2 , text=f"{turn} wins the game" , bg="orange", font=("Arial" , 25))
-                winningLabel.grid(row = 3 , column=0 , columnspan=3)
+                winningLabel = Label(frame1 , text=f"{turn} wins the game" , bg="orange", font=("Arial" , 30))
+                winningLabel.grid(row = 0 , column=0 , columnspan=3)
             turn = "x"
+        
+        if checkForDraw():
+            drawLabel = Label(frame2 , text=f"Game Draw" , bg="orange", font=("Arial" , 25))
+            drawLabel.grid(row = 3 , column=0 , columnspan=3)
+
   
         
 # Tic Tac Toe Board 
@@ -125,6 +134,9 @@ button8.bind("<Button-1>" , play)
 button9 = Button(frame2 , text= " " , width=4 , height=2  , font=("Arial" , 30) , bg="yellow" , relief=RAISED , borderwidth=5)
 button9.grid(row = 2 , column=2)
 button9.bind("<Button-1>" , play)
+
+restartButton = Button(frame2 , text="Restart Game" , width=12 , height=1 , font=("Arial" , 20) , bg="Green" , relief=RAISED , borderwidth=5 )
+restartButton.grid(row=4 , column=0 , columnspan=3)
 
 
 
