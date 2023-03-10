@@ -17,6 +17,7 @@ board = { 1:" " , 2:" " , 3:" ",
           7:" " , 8:" " , 9:" " }
 
 turn = "x"
+game_end = False
 
 
 def checkForWin(player):
@@ -58,6 +59,8 @@ def checkForDraw():
     return True
 
 def restartGame():
+    global game_end
+    game_end = False
     for button in buttons:
         button["text"] = " "
 
@@ -69,7 +72,10 @@ def restartGame():
 
 # Function to play
 def play(event):
-    global turn 
+    global turn,game_end
+    if game_end:
+        return
+    
     button = event.widget
     buttonText = str(button)
     clicked = buttonText[-1]
@@ -85,6 +91,7 @@ def play(event):
             if checkForWin(turn):
                 winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30),width=20   )
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
+                game_end = True
             turn = "o"
             
         else:
@@ -93,11 +100,12 @@ def play(event):
             if checkForWin(turn):
                 winningLabel = Label(frame1 , text=f"{turn} wins the game" , bg="orange", font=("Arial" , 30),width=20)
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
+                game_end = True
             turn = "x"
         
         if checkForDraw():
-            drawLabel = Label(frame2 , text=f"Game Draw" , bg="orange", font=("Arial" , 25))
-            drawLabel.grid(row = 3 , column=0 , columnspan=3)
+            drawLabel = Label(frame1 , text=f"Game Draw" , bg="orange", font=("Arial" , 25), width = 20)
+            drawLabel.grid(row = 0 , column=0 , columnspan=3)
 
   
         
@@ -145,7 +153,7 @@ button9 = Button(frame2 , text= " " , width=4 , height=2  , font=("Arial" , 30) 
 button9.grid(row = 2 , column=2)
 button9.bind("<Button-1>" , play)
 
-restartButton = Button(frame2 , text="Restart Game" , width=12 , height=1 , font=("Arial" , 20) , bg="Green" , relief=RAISED , borderwidth=5 , command=restartGame )
+restartButton = Button(frame2 , text="Restart Game" , width=19 , height=1 , font=("Arial" , 20) , bg="Green" , relief=RAISED , borderwidth=5 , command=restartGame )
 restartButton.grid(row=4 , column=0 , columnspan=3)
 
 buttons = [button1 , button2 , button3 , button4 , button5 , button6 , button7 , button8, button9]
