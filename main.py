@@ -19,6 +19,9 @@ board = { 1:" " , 2:" " , 3:" ",
 turn = "x"
 game_end = False
 
+def updateBoard():
+    for key in board.keys():
+        buttons[key-1]["text"] = board[key]
 
 def checkForWin(player):
     # rows
@@ -150,6 +153,8 @@ def play(event):
             playComputer()
 
             turn = "x"
+
+            updateBoard()
             
         else:
             button["text"] = "O"
