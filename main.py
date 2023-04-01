@@ -70,6 +70,59 @@ def restartGame():
     titleLabel = Label(frame1 , text="Tic Tac Toe" , font=("Arial" , 30) , bg="orange" , width=15 )
     titleLabel.grid(row=0 , column=0)
 
+def minimax(board , isMaximizing):
+    
+    if checkForWin("o"):
+        return 1 
+    
+    if checkForWin("x"):
+        return -1
+    
+    if checkForDraw():
+        return 0
+    
+    if isMaximizing:
+        bestScore = -100
+
+        for key in board.keys():
+            if board[key] == " ":
+                board[key] = "o"
+                score = minimax(board , False) # minimax
+                board[key] = " "
+                if score > bestScore : 
+                    bestScore = score 
+        
+        return bestScore
+    
+    else:
+        bestScore = 100
+
+        for key in board.keys():
+            if board[key] == " ":
+                board[key] = "x"
+                score = minimax(board , True) # minimax
+                board[key] = " "
+                if score < bestScore : 
+                    bestScore = score 
+        
+        return bestScore
+
+
+def playComputer():
+    bestScore = -100
+    bestMove = 0
+
+    for key in board.keys():
+        if board[key] == " ":
+            board[key] = "o"
+            score = minimax(board , False) # minimax
+            board[key] = " "
+            if score > bestScore : 
+                bestScore = score 
+                bestMove = key
+
+    board[bestMove] = "o"
+
 # Function to play
 def play(event):
     global turn,game_end
@@ -93,6 +146,10 @@ def play(event):
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
                 game_end = True
             turn = "o"
+
+            playComputer()
+
+            turn = "x"
             
         else:
             button["text"] = "O"
@@ -106,6 +163,8 @@ def play(event):
         if checkForDraw():
             drawLabel = Label(frame1 , text=f"Game Draw" , bg="orange", font=("Arial" , 25), width = 20)
             drawLabel.grid(row = 0 , column=0 , columnspan=3)
+
+        print(board)
 
   
         
