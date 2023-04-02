@@ -28,10 +28,14 @@ mode = "singlePlayer"
 def changeModeToSinglePlayer(): 
     global mode 
     mode = "singlePlayer"
+    singlePlayerButton["bg"] = "lightgreen"
+    multiPlayerButton["bg"] = "lightgrey"
 
 def changeModeToMultiplayer():
     global mode 
     mode = "multiPlayer"
+    multiPlayerButton["bg"] = "lightgreen"
+    singlePlayerButton["bg"] = "lightgrey"
 
 def updateBoard():
     for key in board.keys():
@@ -194,19 +198,15 @@ def play(event):
             drawLabel = Label(frame1 , text=f"Game Draw" , bg="orange", font=("Arial" , 26), width = 16)
             drawLabel.grid(row = 0 , column=0 , columnspan=3)
         
-
 # ------ UI --------
 
 # Change Mode options 
 
-
-singlePlayerButton = Button(optionFrame , text="SinglePlayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 , command=changeModeToSinglePlayer)
+singlePlayerButton = Button(optionFrame , text="SinglePlayer" , width=13 , height=1 , font=("Arial" , 15) , bg="lightgrey" , relief=RAISED , borderwidth=5 , command=changeModeToSinglePlayer)
 singlePlayerButton.grid(row=0 , column=0 , columnspan=1 , sticky=NW)
 
-multiPlayerButton = Button(optionFrame , text="Multiplayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 , command=changeModeToMultiplayer )
+multiPlayerButton = Button(optionFrame , text="Multiplayer" , width=13 , height=1 , font=("Arial" , 15) , bg="lightgrey" , relief=RAISED , borderwidth=5 , command=changeModeToMultiplayer )
 multiPlayerButton.grid(row=0 , column=1 , columnspan=1 , sticky=NW)
-
-
 
 # Tic Tac Toe Board 
 
@@ -256,6 +256,5 @@ restartButton = Button(frame2 , text="Restart Game" , width=19 , height=1 , font
 restartButton.grid(row=4 , column=0 , columnspan=3)
 
 buttons = [button1 , button2 , button3 , button4 , button5 , button6 , button7 , button8, button9]
-
 
 root.mainloop()
