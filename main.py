@@ -14,12 +14,6 @@ titleLabel.grid(row=0 , column=0)
 optionFrame = Frame(root , bg="grey")
 optionFrame.pack()
 
-aiButton = Button(optionFrame , text="SinglePlayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 )
-aiButton.grid(row=0 , column=0 , columnspan=1 , sticky=NW)
-
-aiButton = Button(optionFrame , text="Multiplayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 )
-aiButton.grid(row=0 , column=1 , columnspan=1 , sticky=NW)
-
 frame2 = Frame(root , bg="yellow")
 frame2.pack()
 
@@ -29,6 +23,15 @@ board = { 1:" " , 2:" " , 3:" ",
 
 turn = "x"
 game_end = False
+mode = "singlePlayer"
+
+def changeModeToSinglePlayer(): 
+    global mode 
+    mode = "singlePlayer"
+
+def changeModeToMultiplayer():
+    global mode 
+    mode = "multiPlayer"
 
 def updateBoard():
     for key in board.keys():
@@ -157,36 +160,55 @@ def play(event):
                 winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 26),width=16 )
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
                 game_end = True
+
             turn = "o"
 
-            playComputer()
-
-            if checkForWin(turn):
-                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 26),width=16   )
-                winningLabel.grid(row = 0 , column=0 , columnspan=3)
-                game_end = True
-
-            turn = "x"
-
             updateBoard()
+
+            if mode == "singlePlayer":
+
+                playComputer()
+
+                if checkForWin(turn):
+                    winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 26),width=16   )
+                    winningLabel.grid(row = 0 , column=0 , columnspan=3)
+                    game_end = True
+
+                turn = "x"
+
+                updateBoard()
+
+           
             
         else:
-            button["text"] = "O"
             board[clicked] = turn
+            updateBoard()
             if checkForWin(turn):
-                winningLabel = Label(frame1 , text=f"{turn} wins the game" , bg="orange", font=("Arial" , 30),width=20)
+                winningLabel = Label(frame1 , text=f"{turn} wins the game" , bg="orange", font=("Arial" , 26),width=16)
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
                 game_end = True
             turn = "x"
+
         
         if checkForDraw():
-            drawLabel = Label(frame1 , text=f"Game Draw" , bg="orange", font=("Arial" , 25), width = 20)
+            drawLabel = Label(frame1 , text=f"Game Draw" , bg="orange", font=("Arial" , 26), width = 16)
             drawLabel.grid(row = 0 , column=0 , columnspan=3)
+        
 
-        print(board)
+# ------ UI --------
+
+# Change Mode options 
 
 
-# Tic Tac Toe Board ------ UI --------
+singlePlayerButton = Button(optionFrame , text="SinglePlayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 , command=changeModeToSinglePlayer)
+singlePlayerButton.grid(row=0 , column=0 , columnspan=1 , sticky=NW)
+
+multiPlayerButton = Button(optionFrame , text="Multiplayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 , command=changeModeToMultiplayer )
+multiPlayerButton.grid(row=0 , column=1 , columnspan=1 , sticky=NW)
+
+
+
+# Tic Tac Toe Board 
 
 #  First row 
 
