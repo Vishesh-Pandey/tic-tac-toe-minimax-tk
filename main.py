@@ -9,7 +9,7 @@ frame1.pack()
 titleLabel = Label(frame1 , text="Tic Tac Toe" , font=("Arial" , 30) , bg="orange" , width=20 )
 titleLabel.grid(row=0 , column=0)
 
-frame2 = Frame(root)
+frame2 = Frame(root , bg="yellow")
 frame2.pack()
 
 board = { 1:" " , 2:" " , 3:" ",
@@ -110,7 +110,6 @@ def minimax(board , isMaximizing):
         
         return bestScore
 
-
 def playComputer():
     bestScore = -100
     bestMove = 0
@@ -142,7 +141,6 @@ def play(event):
     
     if button["text"] == " ":
         if turn == "x" :
-            button["text"] = "X"
             board[clicked] = turn
             if checkForWin(turn):
                 winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30),width=20   )
@@ -151,6 +149,11 @@ def play(event):
             turn = "o"
 
             playComputer()
+
+            if checkForWin(turn):
+                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30),width=20   )
+                winningLabel.grid(row = 0 , column=0 , columnspan=3)
+                game_end = True
 
             turn = "x"
 
@@ -171,9 +174,8 @@ def play(event):
 
         print(board)
 
-  
-        
-# Tic Tac Toe Board 
+
+# Tic Tac Toe Board ------ UI --------
 
 #  First row 
 
