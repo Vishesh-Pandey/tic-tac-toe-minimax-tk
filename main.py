@@ -1,13 +1,24 @@
 from tkinter import *
 
 root = Tk()
-root.geometry("500x500")
+root.geometry("330x550")
 root.title("Tic Tac Toe")
+
+root.resizable(0,0)
 
 frame1 = Frame(root)
 frame1.pack()
-titleLabel = Label(frame1 , text="Tic Tac Toe" , font=("Arial" , 30) , bg="orange" , width=20 )
+titleLabel = Label(frame1 , text="Tic Tac Toe" , font=("Arial" , 26) , bg="orange" , width=16 )
 titleLabel.grid(row=0 , column=0)
+
+optionFrame = Frame(root , bg="grey")
+optionFrame.pack()
+
+aiButton = Button(optionFrame , text="SinglePlayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 )
+aiButton.grid(row=0 , column=0 , columnspan=1 , sticky=NW)
+
+aiButton = Button(optionFrame , text="Multiplayer" , width=13 , height=1 , font=("Arial" , 15) , bg="Green" , relief=RAISED , borderwidth=5 )
+aiButton.grid(row=0 , column=1 , columnspan=1 , sticky=NW)
 
 frame2 = Frame(root , bg="yellow")
 frame2.pack()
@@ -143,7 +154,7 @@ def play(event):
         if turn == "x" :
             board[clicked] = turn
             if checkForWin(turn):
-                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30),width=20   )
+                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 26),width=16 )
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
                 game_end = True
             turn = "o"
@@ -151,7 +162,7 @@ def play(event):
             playComputer()
 
             if checkForWin(turn):
-                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 30),width=20   )
+                winningLabel = Label(frame1 , text=f"{turn} wins the game", bg="orange", font=("Arial" , 26),width=16   )
                 winningLabel.grid(row = 0 , column=0 , columnspan=3)
                 game_end = True
 
